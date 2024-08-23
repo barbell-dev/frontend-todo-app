@@ -1,0 +1,36 @@
+body {
+  font-family: "Courier New", "Courier", "monospace";
+}
+h1 {
+  text-align: center;
+}
+#main-div {
+  /* margin: auto; */
+  /* justify-content: center;
+   */
+  /* justify-items: center; */
+  /* justify-self: center; */
+}
+.search-bar {
+  font-family: "Courier New", "Courier", "monospace";
+}
+#stuff {
+  display: flexbox;
+  margin: auto;
+  width: 20%;
+  /* justify-content: center; */
+
+  /* justify-content: center; */
+}
+.new-element {
+  display: flex;
+}
+.addToDo {
+  font-family: "Courier New", "Courier", "monospace";
+}
+button {
+  font-family: "Courier New", "Courier", "monospace";
+}
+.input-add-todo {
+  font-family: "Courier New", "Courier", "monospace";
+}
