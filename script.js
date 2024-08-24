@@ -44,12 +44,37 @@ function addToDo() {
       console.log(node);
       node.innerHTML = newName;
     } else {
-      alert("Edit has been cancelled.");
+      // alert("Edit has been cancelled.");
+      return;
     }
   };
 }
 // p.appendChild(new);
 function search() {
-  let node = document.querySelectorAll(".new-element");
-  console.log(node);
+  let searchValue = document.querySelector(".search-bar").value;
+  let nodes = document.querySelectorAll(".new-element");
+  for (let i = 0; i < nodes.length; i++) {
+    if (!nodes[i].children[0].innerHTML.includes(searchValue)) {
+      // console.log(nodes[i].children[0].innerHTML);
+
+      nodes[i].children[0].style.display = "none";
+      nodes[i].children[1].style.display = "none";
+      nodes[i].children[2].style.display = "none";
+    } else {
+      // console.log(nodes[i].children[0].innerHTML);
+
+      nodes[i].children[0].style.display = "";
+      nodes[i].children[1].style.display = "";
+      nodes[i].children[2].style.display = "";
+    }
+
+    // console.log(nodes[i].children[0].innerHTML);
+  }
+  // if (
+  //   nodes[0].children[0].innerHTML.startsWith(
+  //     document.querySelector(".search-bar").value
+  //   )
+  // ) {
+  //   console.log(nodes[0].children[0].innerHTML);
+  // }
 }
