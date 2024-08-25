@@ -5,10 +5,10 @@
 	  <meta name="viewport" content="width=device-width">
 	  <title>Todo App</title>
 	  <link rel="stylesheet" href="styles.css" type="text/css" />
-
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	
-	<body>
+	<body id="#light">
 	  <script src="script.js">
     </script>
 	  <div id="main-div">
@@ -17,7 +17,10 @@
 			<input type="text" placeholder="Search todos" class="search-bar" onkeyup="search()"></input>
 	    <input type="text" placeholder="Add a todo" class="input-add-todo"></input>
 
-	    <button onclick="addToDo()" class="addToDo">Add Todo</button></div>
+	    <button onclick="addToDo()" class="addToDo">Add Todo</button>
+			<button onclick="toggleTheme()" class="themeButton"><i style="font-size:24px" class="fa">&#xf186;</i>
+			</button>
+	</div>
 		<div id="todoList"></div>
 	  </div>
      

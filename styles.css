@@ -1,36 +1,81 @@
 body {
   font-family: "Courier New", "Courier", "monospace";
 }
+body #light {
+  background-color: white;
+}
+body #dark {
+  background-color: black;
+}
 h1 {
   text-align: center;
 }
+#stuff {
+  display: grid;
+  grid-gap: 0px 10px; /* Simply adjust this value !*/
+  grid-template-columns: repeat(
+    4,
+    10fr
+  ); /* OR grid-template-columns: 1fr 1fr 1fr;*/
+  /* grid-auto-rows: 1fr; */
+  /* display: flex;
+  justify-content: space-evenly; */
+  /* margin-right: 0px; */
+}
 #main-div {
-  /* margin: auto; */
+  /* display: block; */
+  margin: auto;
   /* justify-content: center;
    */
   /* justify-items: center; */
   /* justify-self: center; */
+  width: 30%;
 }
 .search-bar {
   font-family: "Courier New", "Courier", "monospace";
 }
-#stuff {
-  display: flexbox;
+#todoList {
+  /* display: flexbox; */
   margin: auto;
-  width: 20%;
+  /* width: 20%; */
   /* justify-content: center; */
 
   /* justify-content: center; */
 }
 .new-element {
-  display: flex;
+  display: grid;
+  grid-gap: 80px; /* Simply adjust this value !*/
+  grid-template-columns: repeat(
+    3,
+    1fr
+  ); /* OR grid-template-columns: 1fr 1fr 1fr;*/
+  grid-auto-rows: 1fr;
+
+  /* display: grid;
+*/
+  /* padding: 100; */
+  margin-top: 30px;
+  /* justify-content: space-evenly; */
+  /* align-content: space-between; */
 }
 .addToDo {
   font-family: "Courier New", "Courier", "monospace";
+  width: 100px;
+}
+.edit {
+  border-radius: 5px;
+  padding: 5px;
+  /* width: 100; */
 }
 button {
   font-family: "Courier New", "Courier", "monospace";
+  /* align-content: baseline; */
+  border-radius: 5px;
+  padding: 5px;
 }
 .input-add-todo {
   font-family: "Courier New", "Courier", "monospace";
 }
+/* .themeButton{
+
+} */
