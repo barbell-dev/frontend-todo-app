@@ -1,14 +1,13 @@
 let todoList = [];
-const themeKey = "theme"; // Key for storing the theme in localStorage
+const themeKey = "theme";
 
 window.onload = function () {
   let storedList = localStorage.getItem("todoList");
   if (storedList) {
-    todoList = JSON.parse(storedList); // Convert JSON string back to array
+    todoList = JSON.parse(storedList);
     console.log(todoList);
   }
 
-  // Check and apply the saved theme
   applySavedTheme();
 
   displayTodo();
@@ -28,17 +27,16 @@ function applySavedTheme() {
 function toggleTheme() {
   if (document.body.id === "light") {
     document.body.id = "dark";
-    document.querySelector("#themeIcon").innerHTML = "&#xf185;"; // Sun icon
+    document.querySelector("#themeIcon").innerHTML = "&#xf185;";
     localStorage.setItem(themeKey, "dark");
   } else {
     document.body.id = "light";
-    document.querySelector("#themeIcon").innerHTML = "&#xf186;"; // Moon icon
+    document.querySelector("#themeIcon").innerHTML = "&#xf186;";
     localStorage.setItem(themeKey, "light");
   }
   // location.reload();
 }
 
-// Existing functions
 function displayTodo() {
   let todos = "";
   for (let i = 0; i < todoList.length; i++) {

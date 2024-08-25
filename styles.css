@@ -9,7 +9,7 @@ body#light {
 
 body#dark {
   background-color: black;
-  color: green; /* Text color for dark mode */
+  color: green;
 }
 
 h1 {
