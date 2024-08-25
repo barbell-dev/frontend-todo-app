@@ -1,4 +1,5 @@
 let todoList = [];
+const themeKey = "theme"; // Key for storing the theme in localStorage
 
 window.onload = function () {
   let storedList = localStorage.getItem("todoList");
@@ -6,9 +7,38 @@ window.onload = function () {
     todoList = JSON.parse(storedList); // Convert JSON string back to array
     console.log(todoList);
   }
+
+  // Check and apply the saved theme
+  applySavedTheme();
+
   displayTodo();
 };
 
+function applySavedTheme() {
+  let savedTheme = localStorage.getItem(themeKey);
+  if (savedTheme === "dark") {
+    document.body.id = "dark";
+    document.querySelector("#themeIcon").innerHTML = "&#xf185;"; // Sun icon
+  } else {
+    document.body.id = "light";
+    document.querySelector("#themeIcon").innerHTML = "&#xf186;"; // Moon icon
+  }
+}
+
+function toggleTheme() {
+  if (document.body.id === "light") {
+    document.body.id = "dark";
+    document.querySelector("#themeIcon").innerHTML = "&#xf185;"; // Sun icon
+    localStorage.setItem(themeKey, "dark");
+  } else {
+    document.body.id = "light";
+    document.querySelector("#themeIcon").innerHTML = "&#xf186;"; // Moon icon
+    localStorage.setItem(themeKey, "light");
+  }
+  // location.reload();
+}
+
+// Existing functions
 function displayTodo() {
   let todos = "";
   for (let i = 0; i < todoList.length; i++) {
@@ -88,31 +118,19 @@ function addToDo() {
 
   document.querySelector(".input-add-todo").value = "";
 }
+
 function search() {
   let searchValue = document.querySelector(".search-bar").value;
   let nodes = document.querySelectorAll(".new-element");
   for (let i = 0; i < nodes.length; i++) {
     if (!nodes[i].children[0].innerHTML.includes(searchValue)) {
-      // console.log(nodes[i].children[0].innerHTML);
-
       nodes[i].children[0].style.display = "none";
       nodes[i].children[1].style.display = "none";
       nodes[i].children[2].style.display = "none";
     } else {
-      // console.log(nodes[i].children[0].innerHTML);
-
       nodes[i].children[0].style.display = "";
       nodes[i].children[1].style.display = "";
       nodes[i].children[2].style.display = "";
     }
-
-    // console.log(nodes[i].children[0].innerHTML);
   }
-  // if (
-  //   nodes[0].children[0].innerHTML.startsWith(
-  //     document.querySelector(".search-bar").value
-  //   )
-  // ) {
-  //   console.log(nodes[0].children[0].innerHTML);
-  // }
 }
