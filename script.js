@@ -38,12 +38,30 @@ function toggleTheme() {
 }
 
 function displayTodo() {
-  let todos = "";
+  // let todos = "";
   for (let i = 0; i < todoList.length; i++) {
-    todos += `<div class="new-element" id='${todoList[i]}'>
-    <h4>${todoList[i]}</h4><button class="edit">Edit</button><button class="delete" id="delete${todoList[i]}">Delete</button></div>`;
+    // todos += `<div class="new-element" id='${todoList[i]}'>
+    // <h4>${todoList[i]}</h4><button class="edit">Edit</button><button class="delete" id="delete${todoList[i]}">Delete</button></div>`;
+    let smallDiv = document.createElement("div");
+    smallDiv.className = "new-element";
+    smallDiv.id = todoList[i];
+    let h4 = document.createElement("h4");
+    h4.innerHTML = todoList[i];
+    let editButton = document.createElement("button");
+    editButton.className = "edit";
+    editButton.innerText = "Edit";
+    let deleteButton = document.createElement("button");
+    deleteButton.className = "delete";
+    let dbId = "delete" + todoList[i];
+    deleteButton.id = dbId;
+    deleteButton.innerText = "Delete";
+    smallDiv.appendChild(h4);
+    smallDiv.appendChild(editButton);
+    smallDiv.appendChild(deleteButton);
+    document.querySelector("#todoList").appendChild(smallDiv);
+    console.log(document.querySelector("#todoList"));
   }
-  document.querySelector("#todoList").innerHTML = todos;
+  // document.querySelector("#todoList").innerHTML = todos;
   activateEditListener();
   activateDeleteListener();
 }
@@ -114,7 +132,7 @@ function addToDo() {
   localStorage.setItem("todoList", JSON.stringify(todoList));
   location.reload();
 
-  document.querySelector(".input-add-todo").value = "";
+  // document.querySelector(".input-add-todo").value = "";
 }
 
 function search() {
