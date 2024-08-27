@@ -41,12 +41,13 @@ function displayTodo() {
   // let todos = "";
   for (let i = 0; i < todoList.length; i++) {
     // todos += `<div class="new-element" id='${todoList[i]}'>
-    // <h4>${todoList[i]}</h4><button class="edit">Edit</button><button class="delete" id="delete${todoList[i]}">Delete</button></div>`;
+    // <textarea>${todoList[i]}</textarea><button class="edit">Edit</button><button class="delete" id="delete${todoList[i]}">Delete</button></div>`;
     let smallDiv = document.createElement("div");
     smallDiv.className = "new-element";
     smallDiv.id = todoList[i];
-    let h4 = document.createElement("h4");
-    h4.innerHTML = todoList[i];
+    let textarea = document.createElement("textarea");
+    textarea.innerHTML = todoList[i];
+    textarea.disabled = true;
     let editButton = document.createElement("button");
     editButton.className = "edit";
     editButton.innerText = "Edit";
@@ -55,7 +56,7 @@ function displayTodo() {
     let dbId = "delete" + todoList[i];
     deleteButton.id = dbId;
     deleteButton.innerText = "Delete";
-    smallDiv.appendChild(h4);
+    smallDiv.appendChild(textarea);
     smallDiv.appendChild(editButton);
     smallDiv.appendChild(deleteButton);
     document.querySelector("#todoList").appendChild(smallDiv);
@@ -91,12 +92,41 @@ function activateEditListener() {
 }
 
 function editTodo(index) {
-  let newName = prompt("Enter new name for todo", todoList[index]);
-  if (newName) {
-    todoList[index] = newName;
-    localStorage.setItem("todoList", JSON.stringify(todoList));
-    location.reload();
+  // let newName = prompt("Enter new name for todo", todoList[index]);
+  // if (newName) {
+  //   todoList[index] = newName;
+  //   localStorage.setItem("todoList", JSON.stringify(todoList));
+  //   location.reload();
+  // }
+  // console.log(index);
+  let initialText = todoList[index];
+  let node = document.getElementById(initialText);
+  console.log(initialText);
+  // console.log(node.children[0]);
+  node.children[0].disabled = false;
+  node.children[1].innerHTML = "Save";
+  node.children[1].className = "save";
+  node.children[2].innerHTML = "Cancel";
+  node.children[2].className = "cancel";
+  if ((node.children[1].innerHTML = "Save")) {
+    node.children[1].onclick = () => {
+      node.children[1].innerHTML = "Edit";
+      node.children[2].innerHTML = "Delete";
+      node.children[0].disabled = true;
+
+      todoList[index] = node.children[0].value;
+      localStorage.setItem("todoList", JSON.stringify(todoList));
+      location.reload();
+    };
+    node.children[2].onclick = () => {
+      node.children[1].innerHTML = "Edit";
+      node.children[2].innerHTML = "Delete";
+      todoList[index] = initialText;
+      localStorage.setItem("todoList", JSON.stringify(todoList));
+      // location.reload();
+    };
   }
+  // if(node.chi)
 }
 
 function addToDo() {
@@ -107,8 +137,8 @@ function addToDo() {
   }
 
   let newNode = document.createElement("div");
-  let h4 = document.createElement("h4");
-  h4.innerHTML = sample;
+  let textarea = document.createElement("textarea");
+  textarea.innerHTML = sample;
 
   let editButton = document.createElement("button");
   editButton.innerText = "Edit";
@@ -119,7 +149,7 @@ function addToDo() {
   deleteButton.className = "delete";
   deleteButton.id = "delete" + sample;
 
-  newNode.appendChild(h4);
+  newNode.appendChild(textarea);
   newNode.appendChild(editButton);
   newNode.appendChild(deleteButton);
   newNode.className = "new-element";
