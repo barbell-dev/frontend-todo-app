@@ -1,5 +1,7 @@
 // const { response } = require("express");
 
+// const { response } = require("express");
+
 let todoList = [];
 const themeKey = "theme";
 let log = console.log;
@@ -121,9 +123,10 @@ function editTodo(index) {
   //   localStorage.setItem("todoList", JSON.stringify(todoList));
   //   location.reload();
   // }
-  // console.log(index);
+  console.log(index);
   let initialText = todoList[index];
-  let node = document.getElementById(initialText);
+  let nodes = document.querySelectorAll(".new-element");
+  let node = nodes[index];
   console.log(initialText);
   // console.log(node.children[0]);
   node.children[0].disabled = false;
@@ -133,19 +136,35 @@ function editTodo(index) {
   node.children[2].className = "cancel";
   if ((node.children[1].innerHTML = "Save")) {
     node.children[1].onclick = () => {
+      // for (let i = 0; i < 3432342434; i++) {}
+      log("here");
+      // todoList[index] = node.children[0].value;
+      // localStorage.setItem("todoList", JSON.stringify(todoList));
+      // location.reload();
+      axios
+        .put("http://localhost:3000/api/sasta-notion/put", {
+          index: index,
+          oldTodo: initialText,
+          newTodo: node.children[0].value,
+        })
+        .then((response) => {
+          log(response.data.message);
+        })
+        .finally(location.reload())
+        .catch(() => {
+          console.log("Error.");
+        });
+
       node.children[1].innerHTML = "Edit";
       node.children[2].innerHTML = "Delete";
       node.children[0].disabled = true;
-
-      todoList[index] = node.children[0].value;
-      localStorage.setItem("todoList", JSON.stringify(todoList));
-      location.reload();
     };
     node.children[2].onclick = () => {
       node.children[1].innerHTML = "Edit";
       node.children[2].innerHTML = "Delete";
-      todoList[index] = initialText;
-      localStorage.setItem("todoList", JSON.stringify(todoList));
+      // todoList[index] = initialText;
+      // localStorage.setItem("todoList", JSON.stringify(todoList));
+
       // location.reload();
     };
   }

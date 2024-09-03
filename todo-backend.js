@@ -30,36 +30,42 @@ app.put("/api/sasta-notion/put", function (req, res) {
       res.json({ message: "File not found." });
       return;
     } else {
-      const id = req.body.id;
+      const index = req.body.index;
+      log(typeof index);
       const oldTodo = req.body.oldTodo;
       const newTodo = req.body.newTodo;
       const jsonData = JSON.parse(data);
-      let FOUND = 0;
-      for (let i = 0; i < jsonData.length; i++) {
-        if (jsonData[i].id == id) {
-          let todoList = jsonData[i].todos;
-          let found = 0;
-          for (let j = 0; j < todoList.length; j++) {
-            if (todoList[j].todo == oldTodo) {
-              todoList[j].todo = newTodo;
-              jsonData[i].todos = todoList;
-              fs.writeFile("todos.json", JSON.stringify(jsonData), () => {
-                res.json({ message: "Done" });
-              });
-              found = 1;
-              FOUND = 1;
-            }
-          }
-          if (found == 0) {
-            FOUND = 1;
-            res.json({ message: "Todo not found for that ID." });
-            break;
-          }
-        }
-      }
-      if (FOUND == 0) {
-        res.json({ message: "ID not found." });
-      }
+      jsonData[index] = newTodo;
+      log(jsonData);
+      fs.writeFile("todos.json", JSON.stringify(jsonData), () => {
+        log("Done");
+      });
+      // let FOUND = 0;
+      // for (let i = 0; i < jsonData.length; i++) {
+      //   if (jsonData[i].id == id) {
+      //     let todoList = jsonData[i].todos;
+      //     let found = 0;
+      //     for (let j = 0; j < todoList.length; j++) {
+      //       if (todoList[j].todo == oldTodo) {
+      //         todoList[j].todo = newTodo;
+      //         jsonData[i].todos = todoList;
+      //         fs.writeFile("todos.json", JSON.stringify(jsonData), () => {
+      //           res.json({ message: "Done" });
+      //         });
+      //         found = 1;
+      //         FOUND = 1;
+      //       }
+      //     }
+      //     if (found == 0) {
+      //       FOUND = 1;
+      //       res.json({ message: "Todo not found for that ID." });
+      //       break;
+      //     }
+      //   }
+      // }
+      // if (FOUND == 0) {
+      //   res.json({ message: "ID not found." });
+      // }
     }
   });
 });
