@@ -57,7 +57,7 @@ function toggleTheme() {
     document.querySelector("#themeIcon").innerHTML = "&#xf186;";
     localStorage.setItem(themeKey, "light");
   }
-  location.reload();
+  // location.reload();
 }
 
 function displayTodo() {
@@ -187,9 +187,7 @@ function addToDo() {
     .post("http://localhost:3000/api/sasta-notion/post", {
       todo: todo,
     })
-    .then((response) => {
-      console.log(response);
-    });
+    .then(location.reload());
 
   // document.querySelector(".input-add-todo").value = "";
 }
