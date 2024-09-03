@@ -1,16 +1,39 @@
+// const { response } = require("express");
+
 let todoList = [];
 const themeKey = "theme";
-
+let log = console.log;
 window.onload = function () {
-  let storedList = localStorage.getItem("todoList");
-  if (storedList) {
-    todoList = JSON.parse(storedList);
-    console.log(todoList);
-  }
+  axios.get("http://localhost:3000/api/sasta-notion/get").then((response) => {
+    // log(response.status);
+    // console.log(response.data.todoList);
+    // log("heruber");
+    // log("hehe");
+    if (!response.data.todoList == []) {
+      todoList = response.data.todoList;
+    } else {
+      log("Todo list is empty.");
+    }
+    applySavedTheme();
+    displayTodo();
+  });
+  //data contains the res.json() output.
+  // console.log(storedList.todoList);
+  // console.log("here");
+  // log(storedList.todoList);
+  // if (!storedList.todoList == []) {
+  //   todoList = storedList.todoList;
+  //   console.log(todoList);
 
-  applySavedTheme();
+  //   // log("heh");
+  // } else {
+  //   log("Todo list is empty.");
+  // }
+  // applySavedTheme();
 
-  displayTodo();
+  // // log("heh");
+  // log(storedList.todoList);
+  // displayTodo();
 };
 
 function applySavedTheme() {
@@ -34,7 +57,7 @@ function toggleTheme() {
     document.querySelector("#themeIcon").innerHTML = "&#xf186;";
     localStorage.setItem(themeKey, "light");
   }
-  // location.reload();
+  location.reload();
 }
 
 function displayTodo() {
@@ -130,15 +153,15 @@ function editTodo(index) {
 }
 
 function addToDo() {
-  let sample = document.querySelector(".input-add-todo").value.trim();
-  if (!sample) {
+  let todo = document.querySelector(".input-add-todo").value.trim();
+  if (!todo) {
     alert("Todo can't be empty");
     return;
   }
 
   let newNode = document.createElement("div");
   let textarea = document.createElement("textarea");
-  textarea.innerHTML = sample;
+  textarea.innerHTML = todo;
 
   let editButton = document.createElement("button");
   editButton.innerText = "Edit";
@@ -147,20 +170,26 @@ function addToDo() {
   let deleteButton = document.createElement("button");
   deleteButton.innerHTML = "Delete";
   deleteButton.className = "delete";
-  deleteButton.id = "delete" + sample;
+  deleteButton.id = "delete" + todo;
 
   newNode.appendChild(textarea);
   newNode.appendChild(editButton);
   newNode.appendChild(deleteButton);
   newNode.className = "new-element";
-  newNode.id = sample;
+  newNode.id = todo;
 
   let parentNode = document.querySelector("#todoList");
   parentNode.appendChild(newNode);
 
-  todoList.push(sample);
-  localStorage.setItem("todoList", JSON.stringify(todoList));
-  location.reload();
+  todoList.push(todo);
+  // localStorage.setItem("todoList", JSON.stringify(todoList));
+  axios
+    .post("http://localhost:3000/api/sasta-notion/post", {
+      todo: todo,
+    })
+    .then((response) => {
+      console.log(response);
+    });
 
   // document.querySelector(".input-add-todo").value = "";
 }
