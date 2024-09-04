@@ -11,11 +11,11 @@ app.get("/api/sasta-notion/get", function (req, res) {
       let todos = [];
       // console.log("here");
       fs.writeFile("todos.json", JSON.stringify(todos), () => {
-        console.log(todos);
+        // console.log(todos);
         res.json({ todoList: todos, msg: "Todo list is empty." });
       });
     } else {
-      log(JSON.parse(data));
+      // log(JSON.parse(data));
       res.json({ todoList: JSON.parse(data) });
     }
   });
@@ -70,10 +70,10 @@ app.put("/api/sasta-notion/put", function (req, res) {
   });
 });
 app.post("/api/sasta-notion/post", function (req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   // const id = req.body.id;
   const todo = req.body.todo;
-  console.log("here");
+  // console.log("here");
   // fs.writeFile("todos.json","utf")
   fs.readFile("todos.json", "utf-8", function (err, data) {
     if (err) {
@@ -131,44 +131,55 @@ app.post("/api/sasta-notion/post", function (req, res) {
   });
 });
 app.delete("/api/sasta-notion/delete", function (req, res) {
-  const id = req.body.id;
-  const todo = req.body.todo;
+  log(req.body.index);
+  const index = req.body.index;
+  // log(index);
+  // const todo = req.body.todo;
   fs.readFile("todos.json", "utf-8", (err, data) => {
     if (err || data == "[]" || data.trim() == "") {
-      res.json({ msg: "File not found or file is empty. Cannot delete" });
+      res.json({ message: "File not found or file is empty. Cannot delete" });
       return;
     } else {
       let jsonData = JSON.parse(data);
-      let FOUND = 0;
-      for (let i = 0; i < jsonData.length; i++) {
-        if (jsonData[i].id == id) {
-          // log("here");
-          let found = 0;
-          let todoList = jsonData[i].todos;
-          // if(todoList)
-          for (let j = 0; j < todoList.length; j++) {
-            if (todoList[j].todo == todo) {
-              todoList.splice(j, 1);
-              jsonData[i].todos = todoList;
-              fs.writeFile("todos.json", JSON.stringify(jsonData), () => {
-                res.send("Deleted.");
-              });
-              found = 1;
-              FOUND = 1;
-              break;
-            }
-          }
-          if (found == 0) {
-            FOUND = 1;
-            res.send("Couldnt find todo for that ID.");
-            break;
-          }
-        }
+      let todo = jsonData[index];
+      jsonData.splice(index, 1);
+      try {
+        fs.writeFile("todos.json", JSON.stringify(jsonData), () => {
+          res.json({ message: `Todo ${todo} has been deleted successfully.` });
+        });
+      } catch (e) {
+        res.json({ message: `Unknown error occured. Error: ${e}` });
       }
-      if (FOUND == 0) {
-        res.send("Couldnt find ID");
-        return;
-      }
+      // let FOUND = 0;
+      // for (let i = 0; i < jsonData.length; i++) {
+      //   if (jsonData[i].id == id) {
+      //     // log("here");
+      //     let found = 0;
+      //     let todoList = jsonData[i].todos;
+      //     // if(todoList)
+      //     for (let j = 0; j < todoList.length; j++) {
+      //       if (todoList[j].todo == todo) {
+      //         todoList.splice(j, 1);
+      //         jsonData[i].todos = todoList;
+      //         fs.writeFile("todos.json", JSON.stringify(jsonData), () => {
+      //           res.send("Deleted.");
+      //         });
+      //         found = 1;
+      //         FOUND = 1;
+      //         break;
+      //       }
+      //     }
+      //     if (found == 0) {
+      //       FOUND = 1;
+      //       res.send("Couldnt find todo for that ID.");
+      //       break;
+      //     }
+      //   }
+      // }
+      // if (FOUND == 0) {
+      //   res.send("Couldnt find ID");
+      //   return;
+      // }
     }
   });
 });

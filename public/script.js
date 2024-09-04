@@ -85,7 +85,7 @@ function displayTodo() {
     smallDiv.appendChild(editButton);
     smallDiv.appendChild(deleteButton);
     document.querySelector("#todoList").appendChild(smallDiv);
-    console.log(document.querySelector("#todoList"));
+    // console.log(document.querySelector("#todoList"));
   }
   // document.querySelector("#todoList").innerHTML = todos;
   activateEditListener();
@@ -97,14 +97,24 @@ function activateDeleteListener() {
   deleteButtons.forEach((db, i) => {
     db.addEventListener("click", () => {
       deleteTodo(i);
+      log(i);
     });
   });
 }
 
 function deleteTodo(index) {
-  todoList.splice(index, 1);
-  localStorage.setItem("todoList", JSON.stringify(todoList));
-  location.reload();
+  // todoList.splice(index, 1);
+  // localStorage.setItem("todoList", JSON.stringify(todoList));
+  // location.reload();
+  log(index);
+  axios
+    .delete("http://localhost:3000/api/sasta-notion/delete", {
+      data: { index: index },
+    })
+    .then((response) => {
+      log(response.data.message);
+    })
+    .then(location.reload());
 }
 
 function activateEditListener() {
