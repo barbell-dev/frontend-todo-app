@@ -1,4 +1,4 @@
-# Steps to setup th project locally.  
+# Steps to setup the project locally.  
   
 ### 1.Clone the repository.  
 ### 2.Run npm install in the terminal.  
